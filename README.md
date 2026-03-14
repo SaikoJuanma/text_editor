@@ -1,6 +1,6 @@
 # text_editor
 
-A terminal-based text editor written in Rust. Built as a learning project, with the long-term goal of becoming a feature-rich editor inspired by Obsidian — focused on writing, notes, and plain-text workflows.
+A native GUI text editor written in Rust. Built as a learning project, with the long-term goal of becoming a feature-rich editor inspired by Obsidian — focused on writing, notes, and plain-text workflows.
 
 ## Status
 
@@ -14,7 +14,20 @@ Early development. Native GUI window opens with a full-screen text editor.
 ## Roadmap
 
 - [x] Native GUI window with text editor
-- [ ] Open a file from the command line
+- [x] Open a file from the command line
+
+### Next up — CLI and file handling refactor
+
+The goal is to make the file-opening logic modular, testable, and ready to support new file operations as the editor grows.
+
+1. Create `src/cli.rs` — define an enum `AppArgs` with variants `Open(String)` and `New`. Write a `parse() -> AppArgs` function that reads `std::env::args()` and returns the right variant.
+
+2. Update `main.rs` to use `cli::parse()` and `match` on `AppArgs`. Remove the raw arg parsing from `main`.
+
+3. Add `TextEditor::create(name: &str) -> Self` in `app.rs` — a constructor for a new named empty file, setting up for save-to-disk later.
+
+---
+
 - [ ] Save with keyboard shortcut
 - [ ] Status bar (file name, modified indicator, cursor position)
 - [ ] Multiple files / tabs

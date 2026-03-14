@@ -1,6 +1,3 @@
-use eframe;
-use egui;
-
 pub struct TextEditor {
     content: String,
 }
@@ -10,6 +7,11 @@ impl TextEditor {
         TextEditor {
             content: String::new(),
         }
+    }
+
+    pub fn from_file(path: &str) -> Result<Self, std::io::Error> {
+        let content = std::fs::read_to_string(path)?;
+        Ok(TextEditor { content })
     }
 }
 
@@ -33,6 +35,7 @@ impl eframe::App for TextEditor {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::io::Write;
 
     #[test]
     fn new_creates_empty_content() {
@@ -45,5 +48,19 @@ mod tests {
         let a = TextEditor::new();
         let b = TextEditor::default();
         assert_eq!(a.content, b.content);
+    }
+
+    #[test]
+    fn from_file_loads_content() {
+        let mut file = tempfile::NamedTempFile::new().unwrap();
+        write!(file, "hello from file").unwrap();
+        let editor = TextEditor::from_file(file.path().to_str().unwrap()).unwrap();
+        assert_eq!(editor.content, "hello from file");
+    }
+
+    #[test]
+    fn from_file_returns_error_for_missing_file() {
+        let result = TextEditor::from_file("/nonexistent/path/file.txt");
+        assert!(result.is_err());
     }
 }
