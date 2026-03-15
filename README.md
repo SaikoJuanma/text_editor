@@ -4,31 +4,34 @@ A native GUI text editor written in Rust. Built as a learning project, with the 
 
 ## Status
 
-Early development. Native GUI window opens with a full-screen text editor.
+Early development. Opens, creates, and displays files in a native GUI window.
 
 ## Features
 
 - Native GUI window (egui/eframe)
 - Full-screen text editing area
+- Open an existing file from the command line
+- Create a new file if the given path does not exist
+- Open a blank `untitled.txt` when no argument is provided
+
+## Usage
+
+```bash
+# Open or create a specific file
+cargo run path/to/file.txt
+
+# Open a new untitled file in the current directory
+cargo run
+```
 
 ## Roadmap
 
 - [x] Native GUI window with text editor
 - [x] Open a file from the command line
-
-### Next up — CLI and file handling refactor
-
-The goal is to make the file-opening logic modular, testable, and ready to support new file operations as the editor grows.
-
-1. Create `src/cli.rs` — define an enum `AppArgs` with variants `Open(String)` and `New`. Write a `parse() -> AppArgs` function that reads `std::env::args()` and returns the right variant.
-
-2. Update `main.rs` to use `cli::parse()` and `match` on `AppArgs`. Remove the raw arg parsing from `main`.
-
-3. Add `TextEditor::create(name: &str) -> Self` in `app.rs` — a constructor for a new named empty file, setting up for save-to-disk later.
-
----
-
-- [ ] Save with keyboard shortcut
+- [x] Create a new file if it does not exist
+- [x] Modular file handling (`files.rs`)
+- [ ] Visible cursor position indicator
+- [ ] Save with `Ctrl+S`
 - [ ] Status bar (file name, modified indicator, cursor position)
 - [ ] Multiple files / tabs
 - [ ] Markdown rendering
@@ -37,12 +40,6 @@ The goal is to make the file-opening logic modular, testable, and ready to suppo
 - [ ] Global search across files
 - [ ] AutoSave
 - [ ] Links between files
-
-## Usage
-
-```bash
-cargo run -- path/to/file.txt
-```
 
 ## Development
 
@@ -74,8 +71,8 @@ cargo clippy --all-targets --all-features -- -D warnings
 Every push and pull request on any branch runs:
 
 - `cargo fmt` — formatting check
-- `cargo clippy` — lints (pedantic + nursery, warnings as errors)
-- `cargo test` — unit and doc tests
+- `cargo clippy` — lints (warnings as errors)
+- `cargo test` — unit tests
 - `cargo build` — verifies the project compiles
 
 ## License

@@ -1,22 +1,16 @@
 mod app;
+mod files;
 
 use crate::app::TextEditor;
+use crate::files::open_or_make_file;
 
 fn main() -> eframe::Result<()> {
     let app_name: &str = "Text Editor";
     let args: Vec<String> = std::env::args().collect();
 
-    let editor = if args.len() > 1 {
-        match TextEditor::from_file(&args[1]) {
-            Ok(e) => e,
-            Err(err) => {
-                eprintln!("Could not open file: {}", err);
-                std::process::exit(1);
-            }
-        }
-    } else {
-        TextEditor::new()
-    };
+    let path = args.get(1).map(|s| s.as_str());
+    let content = open_or_make_file(path).expect("Failed to open or create file");
+    let editor = TextEditor::from_content(content);
 
     eframe::run_native(
         app_name,
