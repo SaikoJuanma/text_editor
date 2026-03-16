@@ -18,6 +18,7 @@ Teacher/student relationship. Claude gives tasks, user implements them. Claude d
 
 ## Claude's responsibilities
 - Guide the user through implementation via tasks
-- Own and maintain CI/CD (`.github/workflows/`)
 - Own and maintain `README.md` — update it as features are completed
 - Run `cargo build`/`cargo run`/`cargo test` directly instead of asking the user to share output
+- Make the tests for the project when a new function is done, the goal is 100% coverage, so each function should have its own tests
+- All the functions should be as modular as possible for them to be testable, and scalable, one objective, one function
