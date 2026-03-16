@@ -4,7 +4,7 @@ A native GUI text editor written in Rust. Built as a learning project, with the 
 
 ## Status
 
-Early development. Opens, creates, and displays files in a native GUI window.
+Early development. Opens, creates, displays, and saves files in a native GUI window.
 
 ## Features
 
@@ -13,6 +13,7 @@ Early development. Opens, creates, and displays files in a native GUI window.
 - Open an existing file from the command line
 - Create a new file if the given path does not exist
 - Open a blank `untitled.txt` when no argument is provided
+- Save file with `Ctrl+S`
 
 ## Usage
 
@@ -31,7 +32,7 @@ cargo run
 - [x] Create a new file if it does not exist
 - [x] Modular file handling (`files.rs`)
 - [ ] Visible cursor position indicator
-- [ ] Save with `Ctrl+S`
+- [x] Save with `Ctrl+S`
 - [ ] Status bar (file name, modified indicator, cursor position)
 - [ ] Multiple files / tabs
 - [ ] Markdown rendering
